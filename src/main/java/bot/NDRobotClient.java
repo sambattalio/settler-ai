@@ -13,6 +13,8 @@ public class NDRobotClient extends SOCRobotClient {
 
     public NDRobotClient(ServerConnectInfo sci, String nn, String pw) throws IllegalArgumentException {
         super(sci, nn, pw);
+
+        rbclass = NDRobotClient.class.getName();  // to distinguish from built-in bots while connecting to server
     }
 
     public void init() {
