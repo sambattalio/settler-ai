@@ -1,5 +1,5 @@
 FILES=src/main/java/bot/*.java
-LIBJARFILE=lib/jsettlers2/build/libs/JSettlers-2.3.00.jar
+LIBJARFILE=lib/jsettlers2/build/libs/JSettlers-2.4.50.jar
 BOTCLASS=bot.NDRobotClient
 SERVERCLASS=soc.server.SOCServer
 CLIENTCLASS=soc.client.SOCPlayerClient
@@ -39,3 +39,4 @@ clean:
 	gradle clean
 
 .PHONY:	build update install run serve simulate client test clean
+

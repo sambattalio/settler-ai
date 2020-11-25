@@ -687,7 +687,7 @@ public class NDHelpers {
             return ourSettlements.stream()
                     .map(SOCPlayingPiece::getCoordinates)
                     .sorted(Comparator.comparing(node -> totalProbabilityAtNode(game, node)))
-                    .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node))
+                    .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node, brain.getEstimatorFactory()))
                     .findFirst();
         }
         return ourSettlements.stream()
@@ -696,7 +696,7 @@ public class NDHelpers {
                 )
                 .map(SOCPlayingPiece::getCoordinates)
                 .sorted(Comparator.comparing(node -> totalProbabilityAtNode(game, node)))
-                .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node))
+                .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node, brain.getEstimatorFactory()))
                 .findFirst();
     }
 

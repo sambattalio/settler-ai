@@ -230,8 +230,19 @@ public class NDRobotNegotiator extends SOCRobotNegotiator {
 	}
 	
 	@Override
-	public SOCTradeOffer makeOffer(SOCPossiblePiece targetPiece) {
+	public SOCTradeOffer makeOffer(SOCBuildPlan buildPlan) {
 		D.ebugPrintln("----- Make Offer Thinking -----");
+
+		if ((buildPlan == null) || buildPlan.isEmpty())
+		{
+			return null;
+		}
+		SOCPossiblePiece targetPiece = buildPlan.getPlannedPiece(0);
+		if (targetPiece == null)
+		{
+			return null;
+		}
+
 		int type = targetPiece.getType();
 		SOCResourceSet needed = determineWhatIsNeeded(type);
 		

@@ -5,6 +5,7 @@ import soc.game.SOCPlayer;
 import soc.game.SOCResourceSet;
 import soc.game.SOCSettlement;
 import soc.robot.OpeningBuildStrategy;
+import soc.robot.SOCRobotBrain;
 import soc.debug.D;
 
 import java.util.Vector;
@@ -34,9 +35,10 @@ public class NDOpeningBuildStrategy extends OpeningBuildStrategy {
      *
      * @param ga Our game
      * @param pl Our player data in <tt>ga</tt>
+     * @param br Robot brain for {@code pl} if available, or null
      */
-    public NDOpeningBuildStrategy(SOCGame ga, SOCPlayer pl) {
-        super(ga, pl);
+    public NDOpeningBuildStrategy(SOCGame ga, SOCPlayer pl, SOCRobotBrain br) {
+        super(ga, pl, br);
     }
 
     /**

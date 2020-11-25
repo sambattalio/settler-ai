@@ -8,6 +8,7 @@ import soc.game.SOCPlayer;
 import soc.game.SOCResourceConstants;
 import soc.game.SOCResourceSet;
 import soc.robot.DiscardStrategy;
+import soc.robot.SOCBuildPlanStack;
 import soc.robot.SOCPossiblePiece;
 import soc.robot.SOCRobotBrain;
 
@@ -34,7 +35,7 @@ public class NDDiscardStrategy extends DiscardStrategy {
     }
 
     @Override
-    public SOCResourceSet discard(int numDiscards, Stack<SOCPossiblePiece> buildingPlan) {
+    public SOCResourceSet discard(int numDiscards, SOCBuildPlanStack buildingPlan) {
         switch (DecisionTreeType.whichUse(this.game, this.ourPlayerData)) {
             case LONGEST_ROAD:
                 return discardPrioritize(numDiscards, Arrays.asList(ROAD, SETTLEMENT));
