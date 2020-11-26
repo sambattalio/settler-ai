@@ -476,9 +476,13 @@ public class NDRobotNegotiator extends SOCRobotNegotiator {
 		return null;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * @param targetResources  what resources we want; not null
+	 * @param resources  the resources we have; not null
+	 */
 	@Override
-	public SOCTradeOffer getOfferToBank(SOCResourceSet targetResources) {
-		SOCResourceSet resources = getPlayerResources();
+	public SOCTradeOffer getOfferToBank(SOCResourceSet targetResources, SOCResourceSet resources) {
 		SOCPossiblePiece targetPiece = getTargetPiece();
 		targetResources = determineWhatIsNeeded(targetPiece.getType());
 		
