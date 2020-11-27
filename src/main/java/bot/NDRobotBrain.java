@@ -287,13 +287,11 @@ public class NDRobotBrain extends SOCRobotBrain {
     			 pause(1000);
     		}
     		
-    		if (! waitingForTradeResponse) {
-    			if (tradeToTarget2(targetResources))
-                {
+    		if ((! waitingForTradeResponse) && tradeWithBank(buildingPlan))
+    		{
                     counter = 0;
                     waitingForTradeMsg = true;
                     pause(1500);
-                }
     		}
     		
     		D.ebugPrintln("Target Piece: " + getIdx(targetPiece.getType()));
