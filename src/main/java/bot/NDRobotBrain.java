@@ -46,10 +46,10 @@ public class NDRobotBrain extends SOCRobotBrain {
 
         decisionMaker = new DecisionTreeDM(this);
         negotiator = new NDRobotNegotiator(this);
-        monopolyStrategy = new NDMonopolyStrategy(game, ourPlayerData);
+        monopolyStrategy = new NDMonopolyStrategy(game, ourPlayerData, this);
         robberStrategy = new NDRobberStrategy(game, ourPlayerData, this, rand);
         discardStrategy = new NDDiscardStrategy(game, ourPlayerData, this, rand);
-        openingBuildStrategy = new NDOpeningBuildStrategy(game, ourPlayerData);
+        openingBuildStrategy = new NDOpeningBuildStrategy(game, ourPlayerData, this);
     }
      
     public static boolean[] attemptTrade = {true, true, true, false};
@@ -159,6 +159,7 @@ public class NDRobotBrain extends SOCRobotBrain {
             int clayForSettlement  = ourResources.getAmount(SOCResourceConstants.CLAY) > 0 ? 0 : 1;
             int sheepForSettlement = ourResources.getAmount(SOCResourceConstants.SHEEP) > 0 ? 0 : 1;
 
+            final SOCResourceSet resourceChoices = decisionMaker.getResourceChoices();
             if (oreNeededForCity + wheatNeededForCity == 2) {
                 // build up resources for city only if we optimially will use this card
                 resourceChoices.clear();
@@ -282,17 +283,15 @@ public class NDRobotBrain extends SOCRobotBrain {
     		if ((!ourPlayerData.getResources().contains(targetResources))) {
     			 waitingForTradeResponse = false;
     			 
-    			 makeOffer(targetPiece);
+    			 makeOffer(buildingPlan);
     			 pause(1000);
     		}
     		
-    		if (! waitingForTradeResponse) {
-    			if (tradeToTarget2(targetResources))
-                {
+    		if ((! waitingForTradeResponse) && tradeWithBank(buildingPlan))
+    		{
                     counter = 0;
                     waitingForTradeMsg = true;
                     pause(1500);
-                }
     		}
     		
     		D.ebugPrintln("Target Piece: " + getIdx(targetPiece.getType()));

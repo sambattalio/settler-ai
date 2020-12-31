@@ -2,6 +2,7 @@ package bot;
 
 import soc.debug.D;
 import soc.game.*;
+import soc.robot.SOCBuildingSpeedEstimateFactory;
 import soc.robot.SOCPossiblePiece;
 import soc.robot.SOCPossibleRoad;
 import soc.robot.SOCPossibleSettlement;
@@ -202,9 +203,10 @@ public class NDHelpers {
      * @param game
      * @param player
      * @param resources
+     * @param bsef  BSE factory to pass to {@link SOCPossibleSettlement} constructor
      * @return best settlement
      */
-    public static SOCPossibleSettlement bestPossibleSettlement(SOCGame game, SOCPlayer player, List<Integer> resources) {
+    public static SOCPossibleSettlement bestPossibleSettlement(SOCGame game, SOCPlayer player, List<Integer> resources, final SOCBuildingSpeedEstimateFactory bsef) {
         int playerNo = player.getPlayerNumber();
 
         List<Integer> possibleNodes = findPotentialSettlementsFor(game, playerNo, resources);
@@ -213,7 +215,7 @@ public class NDHelpers {
         }
         Optional<Integer> bestNode = possibleNodes.stream().max(Comparator.comparing(node -> totalProbabilityAtNode(game, node)));
 
-        return bestNode.map(integer -> new SOCPossibleSettlement(player, integer, null)).orElse(null); //TODO add potential road list
+        return bestNode.map(integer -> new SOCPossibleSettlement(player, integer, null, bsef)).orElse(null); //TODO add potential road list
     }
 
 
@@ -676,7 +678,7 @@ public class NDHelpers {
 
     public static Optional<SOCPossibleSettlement> findQualitySettlementFor(List<Integer> resources, NDRobotBrain brain) {
         D.ebugPrintln("Finding quality settlement");
-        return Optional.ofNullable(bestPossibleSettlement(brain.getGame(), brain.getOurPlayerData(), resources));
+        return Optional.ofNullable(bestPossibleSettlement(brain.getGame(), brain.getOurPlayerData(), resources, brain.getEstimatorFactory()));
     }
 
     public static Optional<SOCPossibleCity> findQualityCityFor(List<Integer> resources, NDRobotBrain brain) {
@@ -687,7 +689,7 @@ public class NDHelpers {
             return ourSettlements.stream()
                     .map(SOCPlayingPiece::getCoordinates)
                     .sorted(Comparator.comparing(node -> totalProbabilityAtNode(game, node)))
-                    .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node))
+                    .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node, brain.getEstimatorFactory()))
                     .findFirst();
         }
         return ourSettlements.stream()
@@ -696,7 +698,7 @@ public class NDHelpers {
                 )
                 .map(SOCPlayingPiece::getCoordinates)
                 .sorted(Comparator.comparing(node -> totalProbabilityAtNode(game, node)))
-                .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node))
+                .map(node -> new SOCPossibleCity(brain.getOurPlayerData(), node, brain.getEstimatorFactory()))
                 .findFirst();
     }
 

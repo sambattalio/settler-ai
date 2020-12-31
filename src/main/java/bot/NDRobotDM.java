@@ -52,12 +52,12 @@ public class NDRobotDM extends SOCRobotDM {
         // TODO find settlements left constant
         if (ourPlayerData.getSettlements().size() < 5) {
             // change last coord to settlement as it will always be one from our BFS
-            buildingPlan.push(new SOCPossibleSettlement(ourPlayerData, bestPath.lastElement(), null));
+            buildingPlan.push(new SOCPossibleSettlement(ourPlayerData, bestPath.lastElement(), null, bseFactory));
         } else {
             //try to upgrade if we run out of settlements
             //noinspection OptionalGetWithoutIsPresent
             int toUpgrade = ourPlayerData.getSettlements().stream().map(SOCPlayingPiece::getCoordinates).max(this::compareSettlements).get();
-            buildingPlan.push(new SOCPossibleCity(ourPlayerData, toUpgrade));
+            buildingPlan.push(new SOCPossibleCity(ourPlayerData, toUpgrade, bseFactory));
         }
         for (int j = bestPath.size() - 2; j >= 0; j--)
             buildingPlan.push(new SOCPossibleRoad(ourPlayerData, bestPath.get(j), null));

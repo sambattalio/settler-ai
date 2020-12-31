@@ -5,6 +5,7 @@ import soc.debug.D;
 import soc.game.SOCGame;
 import soc.game.SOCPlayer;
 import soc.robot.MonopolyStrategy;
+import soc.robot.SOCRobotBrain;
 import soc.game.SOCResourceConstants;
 import soc.game.SOCResourceSet;
 
@@ -15,9 +16,10 @@ public class NDMonopolyStrategy extends MonopolyStrategy {
      *
      * @param ga Our game
      * @param pl Our player data in {@code ga}
+     * @param br Robot brain for {@code pl}
      */
-    public NDMonopolyStrategy(SOCGame ga, SOCPlayer pl) {
-        super(ga, pl);
+    public NDMonopolyStrategy(SOCGame ga, SOCPlayer pl, SOCRobotBrain br) {
+        super(ga, pl, br);
     }
 
     /**
